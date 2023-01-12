@@ -4,13 +4,8 @@ from django.db import migrations
 
 def copy_flat_to_apartment(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-
-    for flat in Flat.objects.all():
-        if flat.construction_year >= 2015:
-            Flat.objects.filter(id=flat.id).update(new_building=True)
-        else:
-            Flat.objects.filter(id=flat.id).update(new_building=False)
-
+    Flat.objects.filter(construction_year__gte=2015).update(new_building=True)
+    
 
 class Migration(migrations.Migration):
 
