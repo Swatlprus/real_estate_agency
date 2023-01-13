@@ -36,3 +36,4 @@ def show_flats(request):
         'max_price': max_price,
         'min_price': min_price,
         'new_building': new_building})
+    

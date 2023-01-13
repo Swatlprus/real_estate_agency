@@ -6,12 +6,10 @@ def owner_data_transfer(apps, schema_editor):
     Owner = apps.get_model('property', 'Owner')
     Flat = apps.get_model('property', 'Flat')
     flat_set = Flat.objects.all()
-    owner_set = Owner.objects.all()
 
     for flat in flat_set.iterator():
-        holder, status = owner_set.get_or_create(owner=flat.owner, owners_phonenumber=flat.owners_phonenumber, owner_pure_phone=flat.owner_pure_phone)
-        if status:
-            holder.flats.set(flat_set.filter(owner=holder.owner))
+        holder, status = Owner.objects.get_or_create(owner=flat.owner, owners_phonenumber=flat.owners_phonenumber, owner_pure_phone=flat.owner_pure_phone)
+        holder.flats.add(flat)
 
 class Migration(migrations.Migration):
 
